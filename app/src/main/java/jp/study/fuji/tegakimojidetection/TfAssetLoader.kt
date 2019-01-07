@@ -1,6 +1,5 @@
 package jp.study.fuji.tegakimojidetection
 
-import android.app.Activity
 import android.content.res.AssetManager
 import java.io.BufferedReader
 import java.io.FileInputStream
@@ -10,6 +9,7 @@ import java.nio.channels.FileChannel
 
 class TfAssetLoader(val assets:AssetManager) {
     companion object {
+//        private const val MODEL_PATH = "my_model.lite"
         private const val MODEL_PATH = "my_model.lite"
         private const val LABEL_PATH = "my_labels.txt"
     }

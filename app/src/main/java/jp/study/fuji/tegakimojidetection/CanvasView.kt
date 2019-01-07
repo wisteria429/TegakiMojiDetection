@@ -14,11 +14,11 @@ class CanvasView: View {
 
     init {
         paint.apply {
-            color = Color.rgb(0, 0, 0)
+            color = Color.rgb(0,0,0)
             style = Paint.Style.STROKE
             strokeJoin = Paint.Join.ROUND
             strokeCap = Paint.Cap.ROUND
-            strokeWidth = 10f
+            strokeWidth = 80f
         }
 
     }
@@ -62,6 +62,16 @@ class CanvasView: View {
     fun clear() {
         path.reset()
         invalidate()
+    }
+
+    fun getBitmap() :Bitmap {
+        val b = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
+
+        val c = Canvas(b)
+        draw(c)
+
+        return Bitmap.createScaledBitmap(b, TegakiMojiClassifier.DIM_IMG_SIZE_X, TegakiMojiClassifier.DIM_IMG_SIZE_Y, false)
+
     }
 
 }
