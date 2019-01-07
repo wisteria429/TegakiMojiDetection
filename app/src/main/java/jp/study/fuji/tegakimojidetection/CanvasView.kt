@@ -9,7 +9,7 @@ import android.view.View
 class CanvasView: View {
     private val path : Path = Path()
     private val paint : Paint = Paint()
-
+    var onActionUpListener: (() -> Unit)? = null
 
 
     init {
@@ -51,6 +51,7 @@ class CanvasView: View {
                 MotionEvent.ACTION_UP -> {
                     path.lineTo(x, y)
                     invalidate()
+                    onActionUpListener?.invoke()
                 }
             }
             return true
