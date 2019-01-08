@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.activity_main.*
 import java.nio.MappedByteBuffer
 
