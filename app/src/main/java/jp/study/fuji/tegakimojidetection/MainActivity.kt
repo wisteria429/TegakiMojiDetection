@@ -1,9 +1,14 @@
 package jp.study.fuji.tegakimojidetection
 
-import android.graphics.Bitmap
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import com.google.firebase.ml.custom.FirebaseModelInterpreter
+import com.google.firebase.ml.custom.FirebaseModelManager
+import com.google.firebase.ml.custom.FirebaseModelOptions
+import com.google.firebase.ml.custom.model.FirebaseCloudModelSource
+import com.google.firebase.ml.custom.model.FirebaseLocalModelSource
+import com.google.firebase.ml.custom.model.FirebaseModelDownloadConditions
 import kotlinx.android.synthetic.main.activity_main.*
 import java.nio.MappedByteBuffer
 
@@ -20,6 +25,10 @@ class MainActivity : AppCompatActivity() {
     private val model:MappedByteBuffer by lazy {
         val loader = TfAssetLoader(assets)
         loader.loadTfModelFile()
+    }
+
+    private val classifier:TegakiMojiClassifier by lazy {
+        TegakiMojiClassifier(labels)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,8 +51,11 @@ class MainActivity : AppCompatActivity() {
     private fun classify() {
             val b = canvas.getBitmap()
 
-            image.setImageBitmap(b)
-            val classify = TegakiMojiClassifier(model, labels).classifyFrame(b)
-            text.text = classify
+            classifier.classify(b) {
+                l ->
+                    text.text = l
+                    image.setImageBitmap(b)
+            }
     }
+
 }
