@@ -46,9 +46,20 @@ class MainActivity : AppCompatActivity() {
 
             classifier.classify(b) {
                 l ->
-                    text.text = l
+                    text.text = formatText(l)
                     image.setImageBitmap(b)
             }
+    }
+
+    private fun formatText(results:List<TegakiMojiClassifier.Result>):String {
+        val sb = StringBuilder()
+        val top3 = results.subList(0, 3)
+
+        for(r in top3) {
+            sb.append("%s : (%.2f)\n".format(r.label, r.score))
+        }
+
+        return sb.toString()
     }
 
 }

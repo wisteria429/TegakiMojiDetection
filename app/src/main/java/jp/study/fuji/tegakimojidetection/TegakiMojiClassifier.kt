@@ -4,12 +4,16 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Build
 import android.util.Log
-import com.google.firebase.ml.custom.*
+import android.util.TimingLogger
+import com.google.firebase.ml.custom.FirebaseModelDataType
+import com.google.firebase.ml.custom.FirebaseModelInputOutputOptions
+import com.google.firebase.ml.custom.FirebaseModelInputs
+import com.google.firebase.ml.custom.FirebaseModelInterpreter
+import com.google.firebase.ml.custom.FirebaseModelManager
+import com.google.firebase.ml.custom.FirebaseModelOptions
 import com.google.firebase.ml.custom.model.FirebaseCloudModelSource
 import com.google.firebase.ml.custom.model.FirebaseLocalModelSource
 import com.google.firebase.ml.custom.model.FirebaseModelDownloadConditions
-import java.util.*
-import android.util.TimingLogger
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
@@ -18,8 +22,6 @@ class TegakiMojiClassifier(val labels:List<String>) {
 
     companion object {
         private const val TAG = "TegakiMojiClassifier"
-
-        private const val RESULT_TO_SHOW = 3
 
         private const val DIM_BATCH_SIZE = 1
         private const val DIM_PIXEL_SIZE = 3
@@ -37,10 +39,6 @@ class TegakiMojiClassifier(val labels:List<String>) {
 
     private val imgData:ByteBuffer
 
-    private val sortedLabels : PriorityQueue<Map.Entry<String, Float>> = PriorityQueue(
-        RESULT_TO_SHOW,
-        kotlin.Comparator { t1, t2-> (t1.value).compareTo(t2.value) }
-    )
 
     init {
         imgData = ByteBuffer.allocateDirect(
@@ -59,20 +57,15 @@ class TegakiMojiClassifier(val labels:List<String>) {
 
 
 
-    fun printTopKLables(labelProbArray : Array<FloatArray>):String {
+    private fun formatResults(labelProbArray : Array<FloatArray>):List<Result> {
+        val results = arrayListOf<Result>()
         for (i in 0..(labels.size -1)) {
-            sortedLabels.add(AbstractMap.SimpleEntry(labels.get(i), labelProbArray[0][i]))
-            if (sortedLabels.size > RESULT_TO_SHOW) {
-                sortedLabels.poll()
-            }
+            val label = labels.get(i)
+            val score = labelProbArray[0][i]
+            results.add(Result(label, score))
         }
-        val textToShow = StringBuilder()
-        val size = sortedLabels.size
-        for (i in 0..(size - 1)) {
-            val label = sortedLabels.poll()
-            textToShow.insert(0, "%s: %4.2f\n".format(label.key,label.value))
-        }
-        return textToShow.toString()
+
+        return results.sortedByDescending { it -> it.score }
     }
 
 
@@ -129,7 +122,7 @@ class TegakiMojiClassifier(val labels:List<String>) {
             .build()
     }
 
-    fun classify(bitmap:Bitmap, callback : (String) -> Unit) {
+    fun classify(bitmap:Bitmap, callback : (List<Result>) -> Unit) {
 
         val inputs = FirebaseModelInputs.Builder()
             .add(convertBitmapToByteBuffer(bitmap))
@@ -138,7 +131,7 @@ class TegakiMojiClassifier(val labels:List<String>) {
         interpreter.run(inputs, inputOutputOptions)
             .addOnSuccessListener {
                 val output = it.getOutput<Array<FloatArray>>(0)
-                val labels = printTopKLables(output)
+                val labels = formatResults(output)
                 callback.invoke(labels)
             }
             .addOnFailureListener { e ->
@@ -167,4 +160,6 @@ class TegakiMojiClassifier(val labels:List<String>) {
         logger.dumpToLog()
         return imgData
     }
+
+    class Result(val label:String, val score:Float)
 }
