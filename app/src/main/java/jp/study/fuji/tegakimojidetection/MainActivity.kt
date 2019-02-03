@@ -1,14 +1,7 @@
 package jp.study.fuji.tegakimojidetection
 
-import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.google.firebase.ml.custom.FirebaseModelInterpreter
-import com.google.firebase.ml.custom.FirebaseModelManager
-import com.google.firebase.ml.custom.FirebaseModelOptions
-import com.google.firebase.ml.custom.model.FirebaseCloudModelSource
-import com.google.firebase.ml.custom.model.FirebaseLocalModelSource
-import com.google.firebase.ml.custom.model.FirebaseModelDownloadConditions
+import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.nio.MappedByteBuffer
 
