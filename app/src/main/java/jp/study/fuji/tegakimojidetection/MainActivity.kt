@@ -1,7 +1,9 @@
 package jp.study.fuji.tegakimojidetection
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import java.nio.MappedByteBuffer
 
@@ -23,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     private val classifier:TegakiMojiClassifier by lazy {
         TegakiMojiClassifier(labels)
     }
+
+    private val mainActDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +60,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun save7() {
         val repo = FirebaseStorageRepository()
-        repo.post(canvas.getBitmap(), "7")
+        val d = repo.upload(canvas.getBitmap(), "7").subscribe(
+            {Log.v(TAG, "complete")}, {Log.v(TAG, it.message)}
+        )
+        mainActDisposable.add(d)
     }
 
     private fun formatText(results:List<TegakiMojiClassifier.Result>):String {
