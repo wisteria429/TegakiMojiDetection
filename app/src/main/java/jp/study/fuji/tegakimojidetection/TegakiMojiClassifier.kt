@@ -59,7 +59,7 @@ class TegakiMojiClassifier(val labels:List<String>) {
 
     private fun formatResults(labelProbArray : Array<FloatArray>):List<Result> {
         val results = arrayListOf<Result>()
-        for (i in 0..(labels.size -1)) {
+        for (i in labels.indices) {
             val label = labels.get(i)
             val score = labelProbArray[0][i]
             results.add(Result(label, score))
@@ -150,7 +150,7 @@ class TegakiMojiClassifier(val labels:List<String>) {
         val intArray = IntArray(DIM_IMG_SIZE_X * DIM_IMG_SIZE_Y)
         bitmap.getPixels(intArray, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
 
-        for (i in 0..(intArray.size -1)) {
+        for (i in intArray.indices) {
             val pixel = intArray[i]
             imgData.putFloat((Color.red(pixel) - 127) / 255.0f)
             imgData.putFloat((Color.green(pixel) - 127) / 255.0f)
