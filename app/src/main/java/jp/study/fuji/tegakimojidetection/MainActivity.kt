@@ -34,6 +34,9 @@ class MainActivity : AppCompatActivity() {
             image.setImageBitmap(null)
         }
 
+        bt_save_7.setOnClickListener {
+            save7()
+        }
 
         canvas.onActionUpListener = {
             classify()
@@ -49,6 +52,11 @@ class MainActivity : AppCompatActivity() {
                     text.text = formatText(l)
                     image.setImageBitmap(b)
             }
+    }
+
+    private fun save7() {
+        val repo = FirebaseStorageRepository()
+        repo.post(canvas.getBitmap(), "7")
     }
 
     private fun formatText(results:List<TegakiMojiClassifier.Result>):String {
