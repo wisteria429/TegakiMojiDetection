@@ -15,6 +15,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "FIREBASE_STORAGE_URL", FIREBASE_STORAGE_URL)
     }
     buildTypes {
         release {
@@ -45,7 +46,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-ml-vision:18.0.2'
     implementation 'com.google.firebase:firebase-ml-model-interpreter:16.2.4'
+    implementation 'com.google.firebase:firebase-storage:16.0.5'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.8'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.6"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
 //    implementation 'com.google.firebase:firebase-config:16.0.0'
 }
 

@@ -89,6 +89,7 @@ gen-external-apklibs
 
 # Signing files
 .signing/
+gradle.properties
 
 # Local configuration file (sdk path, etc)
 
