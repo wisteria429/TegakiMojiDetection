@@ -1,5 +1,6 @@
 package jp.study.fuji.tegakimojidetection
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -40,6 +41,11 @@ class MainActivity : AppCompatActivity() {
 
         bt_save_7.setOnClickListener {
             save7()
+        }
+
+        bt_login.setOnClickListener {
+
+            startActivity(Intent(this, AuthActivity::class.java))
         }
 
         canvas.onActionUpListener = {
