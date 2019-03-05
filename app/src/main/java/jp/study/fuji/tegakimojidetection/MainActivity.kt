@@ -9,6 +9,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import io.reactivex.disposables.CompositeDisposable
+import jp.study.fuji.tegakimojidetection.ui.AuthActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.nio.MappedByteBuffer
 

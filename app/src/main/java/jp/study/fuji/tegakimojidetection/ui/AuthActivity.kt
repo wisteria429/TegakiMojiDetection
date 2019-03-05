@@ -1,4 +1,4 @@
-package jp.study.fuji.tegakimojidetection
+package jp.study.fuji.tegakimojidetection.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,6 +11,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import jp.study.fuji.tegakimojidetection.BuildConfig
+import jp.study.fuji.tegakimojidetection.R
 import kotlinx.android.synthetic.main.activity_auth.*
 
 
