@@ -37,6 +37,11 @@ class AuthActivity : AppCompatActivity() {
         viewModel.loginTransitionIntent.observe(this, Observer<Transition?> {
             it?.let(this@AuthActivity::transition)
         })
+
+        supportActionBar?.apply {
+            title = "ログイン"
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
 
     override fun onResume() {

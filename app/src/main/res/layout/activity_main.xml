@@ -8,15 +8,6 @@
         android:background="#efefef"
         tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            >
-
-    </androidx.appcompat.widget.Toolbar>
-
     <jp.study.fuji.tegakimojidetection.CanvasView
             android:id="@+id/canvas"
             android:layout_width="match_parent"
@@ -28,7 +19,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginTop="8dp"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
             android:id="@+id/bt_clear"

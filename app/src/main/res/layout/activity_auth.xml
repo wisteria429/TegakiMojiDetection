@@ -16,14 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent">
-
-        </androidx.appcompat.widget.Toolbar>
-
         <TextView
                 android:id="@+id/text_label_login_status"
                 android:layout_width="wrap_content"
@@ -31,9 +23,12 @@
                 android:text="@string/label_login_status"
                 android:gravity="center_vertical"
                 android:textAppearance="@style/Text.Main"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="@dimen/space_size_normal"/>
+                android:layout_marginTop="@dimen/space_size_normal"
+                android:layout_marginStart="@dimen/space_size_normal"
+                android:layout_marginEnd="@dimen/space_size_small"
+                />
         <TextView
                 android:id="@+id/text_current_user"
                 android:layout_width="wrap_content"
@@ -43,8 +38,6 @@
                 app:layout_constraintTop_toTopOf="@+id/text_label_login_status"
                 android:textAppearance="@style/Text.Main"
                 android:layout_marginStart="@dimen/space_size_small"
-                android:layout_marginTop="@dimen/space_size_small"
-                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@{viewmodel.displayName}"
                 />
@@ -54,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{viewmodel.loginState == LoginState.LOGIN ? @string/logout : @string/login}"
-                app:layout_constraintTop_toBottomOf="@+id/text_current_user"
+                app:layout_constraintTop_toBottomOf="@+id/text_label_login_status"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/space_size_normal"
