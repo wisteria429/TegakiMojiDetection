@@ -5,39 +5,64 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".ui.AuthActivity">
 
-    <data></data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+        <import type="jp.study.fuji.tegakimojidetection.viewmodel.AuthViewModel.LoginState" />
+        <variable
+                name="viewmodel"
+                type="jp.study.fuji.tegakimojidetection.viewmodel.AuthViewModel"/>
 
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <Button
-                android:id="@+id/bt_signIn"
-                android:layout_width="wrap_content"
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="signIn"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"/>
+                app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-                android:id="@+id/bt_signOut"
+        </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+                android:id="@+id/text_label_login_status"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="signOut"
-                app:layout_constraintTop_toBottomOf="@+id/bt_signIn"
+                android:layout_height="@dimen/button_size_normal"
+                android:text="@string/label_login_status"
+                android:gravity="center_vertical"
+                android:textAppearance="@style/Text.Main"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"/>
-
+                android:layout_marginStart="@dimen/space_size_normal"/>
         <TextView
                 android:id="@+id/text_current_user"
                 android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_size_normal"
+                android:gravity="center_vertical"
+                app:layout_constraintStart_toEndOf="@+id/text_label_login_status"
+                app:layout_constraintTop_toTopOf="@+id/text_label_login_status"
+                android:textAppearance="@style/Text.Main"
+                android:layout_marginStart="@dimen/space_size_small"
+                android:layout_marginTop="@dimen/space_size_small"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@{viewmodel.displayName}"
+                />
+
+        <Button
+                android:id="@+id/bt_login"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/bt_signOut"
+                android:text="@{viewmodel.loginState == LoginState.LOGIN ? @string/logout : @string/login}"
+                app:layout_constraintTop_toBottomOf="@+id/text_current_user"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="@dimen/space_size_normal"
+                android:layout_marginEnd="@dimen/space_size_normal"
+                android:layout_marginStart="@dimen/space_size_normal"
+                android:onClick="@{() ->    viewmodel.loginState == LoginState.LOGIN ? viewmodel.logout() : viewmodel.login()}"
+                />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
